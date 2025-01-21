@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Container from './Components/Board/Container';
+import Board from './Components/Board/Board';
 
 
 function App() {
   
   return (
     <div className="App">
-      <Container />
+       <Board/>
     </div>
   );
 }
