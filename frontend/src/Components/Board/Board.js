@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-
+import {io} from 'socket.io-client';
 import './Board.css';
 
 const Board = (props) => {
   const canvasRef = useRef(null);
+  const socketRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [context, setContext] = useState(null);
   const lastPositionRef = useRef({x:0, y:0});
 
   useEffect(() => {
+    //Connect to WebSocket Server
+    socketRef.current = io('http://localhost:5000', {
+      transports: ['websocket'],
+      reconnection: true
+    });
+
+    
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     
@@ -24,6 +32,10 @@ const Board = (props) => {
     
     setContext(ctx);
 
+    socketRef.current.on('draw', (data) => {
+      drawRemoteStroke(data, ctx);
+    });
+
     // Handle window resize
     const handleResize = () => {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -33,8 +45,23 @@ const Board = (props) => {
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+    return () => {
+      // Remove the resize event listener to prevent memory leaks.
+      window.removeEventListener('resize', handleResize);
+      // Close the web socket connection if it exists.
+      socketRef.current.disconnect();
+    }
   }, []);
+
+  const drawRemoteStroke = (data, ctx) => {
+    if (!ctx) return;
+    const canvas = canvasRef.current;
+    ctx.beginPath();
+    ctx.moveTo(data.from.x * canvas.width, data.from.y * canvas.height);
+    ctx.lineTo(data.to.x * canvas.width, data.to.y * canvas.height);
+    ctx.stroke();
+  };
 
   const startDrawing = (e) => {
     setIsDrawing(true);
@@ -51,9 +78,20 @@ const Board = (props) => {
     context.moveTo(lastPositionRef.current.x, lastPositionRef.current.y);
     context.lineTo(pos.x, pos.y);
     context.stroke();
+
+    // Send to server
+    socketRef.current.emit('draw', {
+      from: normalize(lastPositionRef.current, canvasRef.current),
+      to: normalize(pos, canvasRef.current),
+    })
     
     lastPositionRef.current = pos;
   };
+
+  const normalize = (pos, canvas) => ({
+    x: pos.x / canvas.width,
+    y: pos.y / canvas.height,
+  });
 
   const stopDrawing = () => {
     setIsDrawing(false);
@@ -95,3 +133,6 @@ const Board = (props) => {
 };
 
 export default Board;
+
+
+
