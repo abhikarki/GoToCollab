@@ -7,8 +7,6 @@ const admin = require('firebase-admin');  //import firebase admin SDK
 const app = express();
 const server = http.createServer(app);
 
-const db = admin.firestore();
-
 app.use(cors());
 app.use(express.json());
 
