@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'reac-router-dom';
 import {io} from 'socket.io-client';
 import './Board.css';
 
-const Board = (props) => {
+const Board = () => {
+  const { boardId } = useParams();
   const canvasRef = useRef(null);
   const socketRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -32,6 +34,28 @@ const Board = (props) => {
     
     setContext(ctx);
 
+    // Try to add the board to the server or if the boardId exists, we get the current state of the board.
+    socketRef.current.emit('join-board', boardId);
+
+    // Emit the current board state to the requesting user
+    socketRef.current.on('request-board-state', ({ requestingUser }) =>{
+      const imageData = canvas.toDataURL('image/png');
+      socketRef.current.emit('board-state-share', {
+        receivingUser: requestingUser,
+        imageData
+      });
+    });
+
+    // Receive the current board state if you are a new user.
+    socketRef.current.on('receive-board-state', (imageData) =>{
+      const img = new Image();
+      img.onload = () =>{
+        ctx.drawImage(img, 0, 0);
+      };
+      img.src = imageData;
+    });
+
+    // Receive the draw data from other users using the same board.
     socketRef.current.on('draw', (data) => {
       drawRemoteStroke(data, ctx);
     });
