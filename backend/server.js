@@ -25,12 +25,44 @@ const io = new Server(server, {
     }
 });
 
+app.post('/api/boards', async(req, res) =>{
+    try{
+        const boardRef = await db.collection('boards').add({
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            canvasData: ""
+        });
+        res.json({boardId: boardRef.id});
+    }catch(error){
+        console.error('Error creating board: ', error);
+        res.status(500).json({error: 'Failed to create board'});
+    }
+});
+
+
+app.get('/api/boards/:boardId', async(req, res) =>{
+    try{
+        const boardDoc = await db.collection('boards').doc(req.params.boardId).get();
+        if(!boardDoc.exists){
+            res.status(404).json({error: 'Board not found'});
+            return;
+        }
+        res.json({id: boardDoc.id, ...boardDoc.data()});
+    }catch(error){
+        console.error('Error getting board: ', error);
+        res.status(500).json({error: 'Failed to get board'});
+    }
+})
 
 io.on('connection', (socket) => {
     console.log('User Connected: ', socket.id);
 
+    socket.on('join-board', (boardId) =>{
+        socket.join(boardId);
+        console.log(`User ${socket.id} joined board ${boardId}`);
+    })
     socket.on('draw', (data) => {
-        socket.broadcast.emit('draw', data);
+        const {boardId, drawingData} = data;    // Destructure the object
+        socket.to(boardId).emit('draw', drawingData);
     });
 
     socket.on('disconnect', ()=>{
