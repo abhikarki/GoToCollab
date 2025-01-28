@@ -47,7 +47,7 @@ io.on('connection', (socket) => {
         const usersInBoard = boardUsers.get(boardId);
         
         if(usersInBoard.size > 0){
-            const existingUser = [...usersInBoard][0];   //convert to array and access the first element.
+            const existingUser = [...usersInBoard][0];   // convert to array and access the first element.
             io.to(existingUser).emit('request-board-state', {
                 boardId,
                 requestingUser: socket.id
