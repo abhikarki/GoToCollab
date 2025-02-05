@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'reac-router-dom';
+import { useParams } from 'react-router-dom';
 import {io} from 'socket.io-client';
 import './Board.css';
 
@@ -105,6 +105,7 @@ const Board = () => {
 
     // Send to server
     socketRef.current.emit('draw', {
+      boardId,
       from: normalize(lastPositionRef.current, canvasRef.current),
       to: normalize(pos, canvasRef.current),
     })

@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Board from './Components/Board/Board';
+import { BrowserRouter } from 'react-router-dom';
+import LandingPage from './Components/LandingPage/LandingPage';
 
 
 function App() {
   
   return (
     <div className="App">
-       <Board/>
+      <BrowserRouter>
+      <Routes>
+        <Route path = "/" element = {<LandingPage />} />
+        <Route path = "/board/:boardId" element = {<Board />} />
+      </Routes>
+      </BrowserRouter>
     </div>
   );
 }
