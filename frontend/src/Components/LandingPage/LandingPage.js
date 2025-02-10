@@ -8,7 +8,7 @@ const LandingPage = () =>{
 
     const createNewBoard = async () =>{
         try{
-            const response = await axios.post('http://localhost:5000/api/boards');
+            const response = await axios.post('https://gotocollab.onrender.com/api/boards');
             const {boardId} = response.data;
             navigate(`/board/${boardId}`);
         }

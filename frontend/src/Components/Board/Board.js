@@ -13,7 +13,7 @@ const Board = () => {
 
   useEffect(() => {
     //Connect to WebSocket Server
-    socketRef.current = io('http://localhost:5000', {
+    socketRef.current = io('https://gotocollab.onrender.com/', {
       transports: ['websocket'],
       reconnection: true
     });
