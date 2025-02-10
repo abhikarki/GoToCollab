@@ -24,7 +24,7 @@ const boardUsers = new Map();    // boardId -> Set of Socket IDs.
 // Configure CORS for Socket.IO
 const io = new Server(server, {
     cors: {
-        origin: '*', // Replace '*' with the specific URL of your frontend
+        origin: 'https://stellar-pony-2e4d1f.netlify.app', // Replace '*' with the specific URL of your frontend
         methods: ['GET', 'POST']
     }
 });
