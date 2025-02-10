@@ -17,11 +17,6 @@ app.get('/api', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
   });
   
-// Serve the frontend for all other routes
-app.get('*', (req, res) => {
-    console.log("hhee");
-    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-});
 
 // Map to keep track of users for specific board. 
 const boardUsers = new Map();    // boardId -> Set of Socket IDs.
