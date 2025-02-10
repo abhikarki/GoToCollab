@@ -10,13 +10,6 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-app.get('*', (req, res) => {
-    console.log("got here");
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
-
 // API routes
 app.get('/api', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
