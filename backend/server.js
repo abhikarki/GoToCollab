@@ -2,12 +2,25 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
+const path = require('path');
  
 const app = express();
 const server = http.createServer(app);
 
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// API routes
+app.get('/api', (req, res) => {
+    res.json({ message: 'Hello from the backend!' });
+  });
+  
+// Serve the frontend for all other routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
 
 // Map to keep track of users for specific board. 
 const boardUsers = new Map();    // boardId -> Set of Socket IDs.
