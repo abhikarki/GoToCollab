@@ -47,7 +47,7 @@ io.on('connection', (socket) => {
     // Add the user to a specific room identified by boardId.
     socket.on('join-board', (boardId) =>{
         socket.join(boardId);
-
+        console.log("here");
         //if the map doesnot already have the boardId, create one with empty set of users.
         if(!boardUsers.has(boardId)){
             boardUsers.set(boardId, new Set());
