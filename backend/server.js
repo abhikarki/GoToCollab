@@ -19,6 +19,7 @@ app.get('/api', (req, res) => {
   
 // Serve the frontend for all other routes
 app.get('*', (req, res) => {
+    console.log("hhee");
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
