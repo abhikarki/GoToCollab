@@ -76,7 +76,7 @@ const Board = () => {
       // Close the web socket connection if it exists.
       socketRef.current.disconnect();
     }
-  });
+  }, [boardId]);
 
   const drawRemoteStroke = (data, ctx) => {
     if (!ctx) return;
