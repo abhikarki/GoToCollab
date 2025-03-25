@@ -20,10 +20,8 @@ const LandingPage = () =>{
     return(
         <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
         <div className="max-w-md w-full text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Collaborative Whiteboard</h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Create a new board and share it with your team to start collaborating in real-time.
-          </p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">GoToCollab</h1>
+      
           <button
             onClick={createNewBoard}
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg 
