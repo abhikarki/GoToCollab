@@ -2,6 +2,7 @@ import React from 'react';
 import Board from './Components/Board/Board';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
+import Container from './Components/Container/Container';
 
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path = "/" element = {<LandingPage />} />
-        <Route path = "/board/:boardId" element = {<Board />} />
+        <Route path = "/board/:boardId" element = {<Container />} />
       </Routes>
       </BrowserRouter>
     </div>
