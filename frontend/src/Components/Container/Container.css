@@ -1,0 +1,24 @@
+.Container-class {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    margin-top: 20px; /* Add some space at the top */
+  }
+  
+  .copy-link-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%; /* Ensure it takes up the full width */
+    max-width: 600px; /* Optional: you can set a max width */
+    padding: 10px; /* Add some padding for spacing */
+    margin-bottom: 20px; /* Add space between the link container and Board */
+  }
+  
+  
+.board-wrapper{
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+}

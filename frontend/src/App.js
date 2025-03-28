@@ -2,10 +2,11 @@ import React from 'react';
 import Board from './Components/Board/Board';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
-import Container from './Components/Container/Container';
+import Container  from './Components/Container/Container.js';
 
 
-function App() {
+
+const App = () =>{
   
   return (
     <div className="App">
