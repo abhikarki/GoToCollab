@@ -26,6 +26,9 @@ const Container = () => {
 
   return (
     <div className="Container-class">
+      {showAlert && (
+          <div className="copied-alert-message"> Board link copied to clipboard</div>
+        )}
       <div className="copy-link-container">
         <input
           type="text"
@@ -37,9 +40,7 @@ const Container = () => {
         <button onClick={copyToClipboard} id="copy-link-button">
           Copy Link
         </button>
-        {showAlert && (
-          <div className="copied-alert-message"> Board link copied to clipboard</div>
-        )}
+        
       </div>
       
       {/* <Tools color={color} setColor={setColor} /> */}

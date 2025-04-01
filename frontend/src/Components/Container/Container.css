@@ -28,8 +28,8 @@
   border-radius: 4px;
   z-index: 9999;
   top: 20px;
-  left: 1%;
-  transform: translateX(-50%);
+  left: 50%;
+  transform: translateX(-50%);            /* move the element by 50% of its own width */
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 16px;
