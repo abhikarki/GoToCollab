@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 const Container = () => {
   const { boardId } = useParams();
+  const [showAlert, setShowAlert] = useState(false);
   const [color, setColor] = useState("#000000"); // Default black color
   const [boardLink, setBoardLink] = useState('');
 
@@ -16,8 +17,11 @@ const Container = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(boardLink)
-      .then(() => alert('Board link copied to clipboard!'))
-      .catch((err) => console.error('Failed to copy: ', err));
+    .then(() =>{
+      setShowAlert(true);   
+      setTimeout(() => setShowAlert(false), 3000);  // Disappear after 3 seconds.
+    })
+    .catch((err) => console.error('Failed to Copy: ', err));
   };
 
   return (
@@ -28,10 +32,14 @@ const Container = () => {
           value={boardLink}
           readOnly
           className="board-link-input"
+          style={{width: `${boardLink.length}ch`}}
         />
         <button onClick={copyToClipboard} id="copy-link-button">
           Copy Link
         </button>
+        {showAlert && (
+          <div className="copied-alert-message"> Board link copied to clipboard</div>
+        )}
       </div>
       
       {/* <Tools color={color} setColor={setColor} /> */}
