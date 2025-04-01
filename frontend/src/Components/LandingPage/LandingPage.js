@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-
+import "./LandingPage.css"
 
 const LandingPage = () =>{
     const navigate = useNavigate();
-
+    const [isBoardLoading, setIsBoardLoading] = useState(false);
+    const [loadingMessage, setLoadingMessage] = useState("");
     const createNewBoard = async () =>{
+       setIsBoardLoading(true);
+       setLoadingMessage("Creating a brand new board for you...");
         try{
             const response = await axios.post('https://gotocollab.onrender.com/api/boards');
             const {boardId} = response.data;
+            setIsBoardLoading(false);
             navigate(`/board/${boardId}`);
         }
         catch(error){
@@ -22,6 +26,11 @@ const LandingPage = () =>{
         <div className="max-w-md w-full text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-8">GoToCollab</h1>
       
+          {isBoardLoading && (
+                    <div className="text-lg font-semibold text-gray-700 mb-4">
+                        {loadingMessage}
+                    </div>
+                )}
           <button
             onClick={createNewBoard}
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg 
