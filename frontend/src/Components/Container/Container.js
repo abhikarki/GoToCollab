@@ -35,7 +35,7 @@ const Container = () => {
           value={boardLink}
           readOnly
           className="board-link-input"
-          style={{width: `${boardLink.length}ch`}}
+          style={{width: `${boardLink.length}ch`, padding: '5px', borderRadius: "5px"}}
         />
         <button onClick={copyToClipboard} id="copy-link-button">
           Copy Link

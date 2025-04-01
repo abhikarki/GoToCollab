@@ -19,6 +19,9 @@
 
 #copy-link-button{
   margin-left: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(191, 208, 223);
 }
 
 
